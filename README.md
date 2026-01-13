@@ -1,24 +1,28 @@
-# README
+## Tech Playground – Pin People
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Tarefas Obrigatórias Implementadas
+- Tarefa 1: Banco de Dados Básico
+- Tarefa 3: Suíte de Testes
+- Tarefa 9: API Simples
 
-Things you may want to cover:
+### Stack Tecnológico
+- Ruby on Rails (API)
+- PostgreSQL
+- Docker / Docker Compose
+- RSpec
 
-* Ruby version
+### Configuração e Execução
+```bash
+docker compose up --build -d
+docker compose exec api rails db:create db:migrate
+docker compose exec api rails import:csv
+```
 
-* System dependencies
+### Endpoints da API
 
-* Configuration
+* `GET /api/v1/employees`
+  - Retorna uma lista de colaboradores com seus departamentos.
+  - Suporta filtragem por `department_id`.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* `GET /api/v1/metrics/enps`
+  - Retorna a pontuação eNPS calculada com base nas respostas da pesquisa.
