@@ -1,7 +1,7 @@
 class SurveyResponse < ApplicationRecord
   belongs_to :employee
 
-  LIKERT_RANGE = (1..5).freeze
+  LIKERT_RANGE = (1..5)
 
   validates :interest_in_role,
             :contribution,
@@ -13,9 +13,7 @@ class SurveyResponse < ApplicationRecord
             inclusion: { in: LIKERT_RANGE }
 
   validates :enps, inclusion: { in: 0..10 }
-  validates :employee, presence: true
 
-  # Business logic: Calculate eNPS score
   def self.enps_score
     total = count
     return 0 if total.zero?
