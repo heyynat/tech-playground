@@ -6,8 +6,9 @@ module Api
 
         employees = employees.where(department_id: params[:department_id]) if params[:department_id]
 
-        render json: employees.as_json(include: :department)
+        render json: employees.map { |e| EmployeeSerializer.new(e).as_json }
       end
     end
   end
 end
+

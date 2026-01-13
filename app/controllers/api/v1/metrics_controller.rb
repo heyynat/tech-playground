@@ -3,15 +3,17 @@ module Api
     class MetricsController < ApplicationController
       def enps
         total = SurveyResponse.count
-        return render json: { enps: 0 } if total.zero?
 
-        promoters = SurveyResponse.where(enps: 9..10).count
-        detractors = SurveyResponse.where(enps: 0..6).count
+        return render json: { enps: 0, total_responses: 0 } if total.zero?
 
-        score = ((promoters - detractors).to_f / total * 100).round
+        score = SurveyResponse.enps_score
 
-        render json: { enps: score }
+        render json: {
+          enps: score,
+          total_responses: total
+        }
       end
     end
   end
 end
+

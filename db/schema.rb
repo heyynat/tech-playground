@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_12_230156) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_13_033430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,11 +45,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_12_230156) do
     t.integer "manager_interaction"
     t.integer "career_clarity"
     t.integer "permanence_expectation"
-    t.integer "enps"
+    t.integer "enps", null: false
     t.text "comment"
     t.datetime "responded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["employee_id", "responded_at"], name: "idx_unique_employee_response_date", unique: true
     t.index ["employee_id"], name: "index_survey_responses_on_employee_id"
     t.index ["enps"], name: "index_survey_responses_on_enps"
   end

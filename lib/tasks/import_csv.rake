@@ -19,19 +19,21 @@ namespace :import do
         e.department = department
       end
 
-      SurveyResponse.create!(
+      # Idempotent import: avoid duplicating responses on re-runs
+      SurveyResponse.find_or_create_by!(
         employee: employee,
-        interest_in_role: row["Interesse no Cargo"],
-        contribution: row["Contribuição"],
-        learning_and_development: row["Aprendizado e Desenvolvimento"],
-        feedback: row["Feedback"],
-        manager_interaction: row["Interação com Gestor"],
-        career_clarity: row["Clareza sobre Possibilidades de Carreira"],
-        permanence_expectation: row["Expectativa de Permanência"],
-        enps: row["eNPS"],
-        comment: row["[Aberta] eNPS"],
         responded_at: row["Data da Resposta"]
-      )
+      ) do |response|
+        response.interest_in_role = row["Interesse no Cargo"]
+        response.contribution = row["Contribuição"]
+        response.learning_and_development = row["Aprendizado e Desenvolvimento"]
+        response.feedback = row["Feedback"]
+        response.manager_interaction = row["Interação com Gestor"]
+        response.career_clarity = row["Clareza sobre Possibilidades de Carreira"]
+        response.permanence_expectation = row["Expectativa de Permanência"]
+        response.enps = row["eNPS"]
+        response.comment = row["[Aberta] eNPS"]
+      end
     end
   end
 end
