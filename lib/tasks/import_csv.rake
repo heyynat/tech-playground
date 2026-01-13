@@ -19,7 +19,6 @@ namespace :import do
         e.department = department
       end
 
-      # Idempotent import: avoid duplicating responses on re-runs
       SurveyResponse.find_or_create_by!(
         employee: employee,
         responded_at: row["Data da Resposta"]
